@@ -24,7 +24,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 /**
  * 
- * Screen space ambient occlussion
+ * Screen space ambient occlusion
  * 
  * @author germangb
  *
