@@ -32,8 +32,8 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
 public class SSAO implements OpenGLEffect {
 
 	// TWEAKING
-	private final int SAMPLES = 64;	// <= than 128
-	private final float RADIUS = 0.1f;
+	private final int SAMPLES = 32;	// <= than 128
+	private final float RADIUS = 0.25f;
 	
 	private class Shader {
 		public int id;
