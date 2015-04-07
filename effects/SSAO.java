@@ -599,7 +599,7 @@ public class SSAO implements OpenGLEffect {
 		DoubleBuffer buff = BufferUtils.createDoubleBuffer(1);
 		GLFW.glfwGetCursorPos(window, buff, null);
 		
-		GL20.glUniform1f(uMouseX, 0);
+		GL20.glUniform1f(uMouseX, (float) buff.get(0) / MainGLFW.WIDTH);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, colorTexture);
 		GL13.glActiveTexture(GL13.GL_TEXTURE1);
