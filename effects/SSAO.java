@@ -1,16 +1,17 @@
 package effects;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 //import java.util.Random;
 
 
-import main.Main;
+import main.MainGLFW;
 import main.MatrixUtils;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
@@ -24,7 +25,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 /**
  * 
- * Screen space ambient occlusion
+ * Screen space ambient occlussion
  * 
  * @author germangb
  *
@@ -34,6 +35,7 @@ public class SSAO implements OpenGLEffect {
 	// TWEAKING
 	private final int SAMPLES = 32;	// <= than 128
 	private final float RADIUS = 0.25f;
+	private final float POWER = 0.75f;
 	
 	private class Shader {
 		public int id;
@@ -225,6 +227,7 @@ public class SSAO implements OpenGLEffect {
 			+ "uniform mat4 u_invProjection;"
 			+ "uniform mat4 u_projection;"
 			+ "uniform float u_mouseX;"
+			+ "uniform float u_power;"
 			+ "vec4 getModelViewPos (vec2 uv) {"
 			+ "	float depth = texture2D(u_depth, uv).r;"
 			+ "	vec4 mvPos = vec4(uv*2.0-1.0, depth*2.0-1.0, 1.0);"
@@ -250,7 +253,7 @@ public class SSAO implements OpenGLEffect {
 			+ "			float diff = sampleProject.z*0.5+0.5 - depthRead;"
 			+ "			if (diff > 0.0001 && diff < 0.0025) ao+=1;"
 			+ "		}"
-			+ "		color *=  1.0 - ao / float(u_maxSamples);"
+			+ "		color *=  pow(1.0 - ao / float(u_maxSamples), u_power);"
 			+ " }"
 			+ "	if (abs(uv.x-u_mouseX) < 0.005) color *= 0.0;"
 			+ "	frag_color = vec4(color, 1.0);\n"
@@ -276,6 +279,7 @@ public class SSAO implements OpenGLEffect {
 	private int uRadius;
 	private int uMaxSamples;
 	private int uMouseX;
+	private int uPower;
 	
 	// frame buffer object
 	private int fbo;
@@ -289,18 +293,6 @@ public class SSAO implements OpenGLEffect {
 	
 	@Override
 	public void setUp() {
-		/*Random randd = new Random(42);
-		for (int i = 0; i < 32; ++i) {
-			float x = randd.nextFloat()*2.0f-1.0f;
-			float y = randd.nextFloat();
-			float z = randd.nextFloat()*2.0f-1.0f;
-			float m = randd.nextFloat();
-			float l = (float)Math.sqrt(x*x+y*y+z*z);
-			x *= m/l;
-			y *= m/l;
-			z *= m/l;
-			System.out.println("+ \"vec3("+x+","+y+","+z+"),\\n\"");
-		}*/
 		// create cube vbo
 		float[] dataCube = new float[] {
 			-64, -1, -64, 	0, 1, 0,
@@ -537,6 +529,7 @@ public class SSAO implements OpenGLEffect {
 		uRadius = GL20.glGetUniformLocation(shaderFinal.id, "u_radius");
 		uMaxSamples = GL20.glGetUniformLocation(shaderFinal.id, "u_maxSamples");
 		uMouseX = GL20.glGetUniformLocation(shaderFinal.id, "u_mouseX");
+		uPower = GL20.glGetUniformLocation(shaderFinal.id, "u_power");
 		try {
 			// load random texture
 			PNGDecoder rand = new PNGDecoder(getClass().getResourceAsStream("SSAO_random.png"));
@@ -550,9 +543,9 @@ public class SSAO implements OpenGLEffect {
 		
 		// create frame buffer
 		fbo = GL30.glGenFramebuffers();
-		colorTexture = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_RGB, null);
-		normalTexture = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_RGB, null);
-		depthTexture = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_DEPTH_COMPONENT, null);
+		colorTexture = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_RGB, null);
+		normalTexture = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_RGB, null);
+		depthTexture = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_DEPTH_COMPONENT, null);
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fbo);
 		GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, colorTexture, 0);
 		GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_COLOR_ATTACHMENT1, GL11.GL_TEXTURE_2D, normalTexture, 0);
@@ -572,12 +565,12 @@ public class SSAO implements OpenGLEffect {
 	private float t = 0;
 	
 	@Override
-	public void update() {
+	public void update(long window) {
 		cubePass();
-		SSAOPass();
+		SSAOPass(window);
 	}
 	
-	public void SSAOPass () {
+	public void SSAOPass (long window) {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 				
 		/*
@@ -594,14 +587,19 @@ public class SSAO implements OpenGLEffect {
 		GL20.glUniformMatrix4(uProjectionFinal, false, matBuffer);
 		invProjection.store(matBuffer); matBuffer.position(0);
 		GL20.glUniformMatrix4(uInvProjection, false, matBuffer);
-		GL20.glUniform2f(uResolutionFinal, Main.WIDTH, Main.HEIGHT);
+		GL20.glUniform2f(uResolutionFinal, MainGLFW.WIDTH, MainGLFW.HEIGHT);
 		GL20.glUniform1i(uTextureFinal, 0);
 		GL20.glUniform1i(uDepthFinal, 1);
 		GL20.glUniform1i(uNormalFinal, 2);
 		GL20.glUniform1i(uRandomFinal, 3);
 		GL20.glUniform1i(uMaxSamples, SAMPLES);
 		GL20.glUniform1f(uRadius, RADIUS);
-		GL20.glUniform1f(uMouseX, (float)Mouse.getX() / Main.WIDTH);
+		GL20.glUniform1f(uPower, POWER);
+		
+		DoubleBuffer buff = BufferUtils.createDoubleBuffer(1);
+		GLFW.glfwGetCursorPos(window, buff, null);
+		
+		GL20.glUniform1f(uMouseX, 0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, colorTexture);
 		GL13.glActiveTexture(GL13.GL_TEXTURE1);

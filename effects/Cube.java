@@ -130,7 +130,7 @@ public class Cube implements OpenGLEffect {
 	float t = 0;
 	
 	@Override
-	public void update() {
+	public void update(long window) {
 		t += 0.025f;
 		
 		GL11.glClearColor(1, 1, 1, 1);

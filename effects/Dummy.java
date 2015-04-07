@@ -8,7 +8,7 @@ public class Dummy implements OpenGLEffect {
 	}
 
 	@Override
-	public void update() {
+	public void update(long window) {
 	}
 
 	@Override

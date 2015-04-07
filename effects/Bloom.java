@@ -2,7 +2,7 @@ package effects;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-import main.Main;
+import main.MainGLFW;
 import main.MatrixUtils;
 
 import org.lwjgl.BufferUtils;
@@ -248,11 +248,11 @@ public class Bloom implements OpenGLEffect {
 		// create frame buffer
 		fbo = GL30.glGenFramebuffers();
 		fboLumin = GL30.glGenFramebuffers();
-		colorTextureA = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_RGB);
-		colorTextureB = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_RGB);
-		depthTexture = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_DEPTH_COMPONENT);
-		originalColor = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_RGB);
-		originalDepth = createTexture(Main.WIDTH, Main.HEIGHT, GL11.GL_DEPTH_COMPONENT);
+		colorTextureA = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_RGB);
+		colorTextureB = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_RGB);
+		depthTexture = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_DEPTH_COMPONENT);
+		originalColor = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_RGB);
+		originalDepth = createTexture(MainGLFW.WIDTH, MainGLFW.HEIGHT, GL11.GL_DEPTH_COMPONENT);
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboLumin);
 		GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, colorTextureA, 0);
 		GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_DEPTH_ATTACHMENT, GL11.GL_TEXTURE_2D, depthTexture, 0);
@@ -275,7 +275,7 @@ public class Bloom implements OpenGLEffect {
 	private final int blurIterarions = 16;	// must be even
 	
 	@Override
-	public void update() {
+	public void update(long window) {
 		t += 0.025f;
 		
 		// compute transforms
@@ -303,7 +303,7 @@ public class Bloom implements OpenGLEffect {
 
 		// begin the blur
 		GL20.glUseProgram(shaderBlur.id);
-		GL20.glUniform2f(uResolutionBlur, Main.WIDTH, Main.HEIGHT);
+		GL20.glUniform2f(uResolutionBlur, MainGLFW.WIDTH, MainGLFW.HEIGHT);
 		GL20.glUniform1i(uTextureBlur, 0);
 		
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboBlur);
@@ -346,7 +346,7 @@ public class Bloom implements OpenGLEffect {
 		
 		// bind shader
 		GL20.glUseProgram(shaderFinal.id);
-		GL20.glUniform2f(uResolutionFinal, Main.WIDTH, Main.HEIGHT);
+		GL20.glUniform2f(uResolutionFinal, MainGLFW.WIDTH, MainGLFW.HEIGHT);
 		GL20.glUniform1i(uTextureFinal, 0);
 		GL20.glUniform1i(uLuminFinal, 1);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
