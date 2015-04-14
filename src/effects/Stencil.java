@@ -38,7 +38,8 @@ public class Stencil implements OpenGLEffect {
 		
 		// don't write to the color buffer
 		GL11.glColorMask(false, false, false, false);
-		// replace current value in the stencil buffer
+		// write a 1 to the stencil buffer
+		GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0);
 	    GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
 		GL11.glPushMatrix();
 		t += 1f;
