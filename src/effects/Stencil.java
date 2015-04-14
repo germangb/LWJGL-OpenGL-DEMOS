@@ -19,11 +19,14 @@ public class Stencil implements OpenGLEffect {
 		GL11.glLoadIdentity();
 		
 		// clear stencil
-	    GL11.glClearStencil(0);
 		
 		// load cat texture
 		texture = GLUtils.createTexture("pusheen.png");
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
+		
+		// set up stencil
+	    GL11.glClearStencil(0); //set stencill to 0
+		GL11.glEnable(GL11.GL_STENCIL_TEST);
 	}
 
 	float t = 0;
@@ -33,8 +36,9 @@ public class Stencil implements OpenGLEffect {
 		GL11.glClearColor(0, 0, 0, 1);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 		
+		// don't write to the color buffer
 		GL11.glColorMask(false, false, false, false);
-		GL11.glEnable(GL11.GL_STENCIL_TEST);
+		// replace current value in the stencil buffer
 	    GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
 		GL11.glPushMatrix();
 		t += 1f;
@@ -48,8 +52,7 @@ public class Stencil implements OpenGLEffect {
 		GL11.glPopMatrix();
 		
 		// enable stencil test
-		//GL11.glDisable(GL11.GL_STENCIL_TEST);
-		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 1);
+		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 1);	// only render whenever there's a 1 in the stencil
 		GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
 		GL11.glColorMask(true, true, true, true);
 		GL11.glBegin(GL11.GL_QUADS);
