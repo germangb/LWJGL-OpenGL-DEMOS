@@ -35,7 +35,6 @@ public class Stencil implements OpenGLEffect {
 		
 		GL11.glColorMask(false, false, false, false);
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
-	    GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 1);
 	    GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
 		GL11.glPushMatrix();
 		t += 1f;
