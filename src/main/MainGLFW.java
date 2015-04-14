@@ -57,7 +57,7 @@ public class MainGLFW {
 	private void loop() {
 		GLContext.createFromCurrent();
 		GL11.glClearColor(1, 1, 1, 1);
-		effect = new SSAO();
+		effect = new Stencil();
 		effect.setUp();
 		while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
 			effect.update(window);

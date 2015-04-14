@@ -6,7 +6,6 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 //import java.util.Random;
 
-
 import main.MainGLFW;
 import main.MatrixUtils;
 
@@ -530,6 +529,7 @@ public class SSAO implements OpenGLEffect {
 		uMaxSamples = GL20.glGetUniformLocation(shaderFinal.id, "u_maxSamples");
 		uMouseX = GL20.glGetUniformLocation(shaderFinal.id, "u_mouseX");
 		uPower = GL20.glGetUniformLocation(shaderFinal.id, "u_power");
+		
 		try {
 			// load random texture
 			PNGDecoder rand = new PNGDecoder(getClass().getResourceAsStream("SSAO_random.png"));
