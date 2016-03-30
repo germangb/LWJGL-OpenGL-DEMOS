@@ -8,7 +8,7 @@ A small collection of OpenGL samples implementing different graphics techniques
 - [ ] Shadow Mapping
 - [ ] Normal Mapping
 - [ ] Deffered decals
-- [ ] Light volumes
+- [ ] Light volumes (deferred lighting)
 - [ ] Skeletal Animation (vertex skinning)
 
 ## Contributing
