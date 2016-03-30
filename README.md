@@ -9,6 +9,7 @@ A small collection of OpenGL samples implementing diferent graphics techniques
 - [ ] Normal Mapping
 - [ ] Defered decals
 - [ ] Light volumes
+- [ ] Skeletal Animation (vertex skinning)
 
 ## Cube -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Cube.java)
 A collection of single-file xgraphic techniques implemented in OpenGL
