@@ -1,5 +1,5 @@
 # LWJGL-OpenGL-DEMOS
-A small collection of OpenGL samples implementing diferent graphics techniques
+A small collection of OpenGL samples implementing different graphics techniques
 
 - [x] Cube
 - [x] Blur
@@ -7,7 +7,7 @@ A small collection of OpenGL samples implementing diferent graphics techniques
 - [x] SSAO
 - [ ] Shadow Mapping
 - [ ] Normal Mapping
-- [ ] Defered decals
+- [ ] Deffered decals
 - [ ] Light volumes
 - [ ] Skeletal Animation (vertex skinning)
 
