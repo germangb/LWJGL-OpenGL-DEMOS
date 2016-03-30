@@ -1,4 +1,4 @@
-# LWJGL-OpenGL-DEMOS
+# OpenGL Samples
 A small collection of OpenGL samples implementing different graphics techniques
 
 - [x] Cube
