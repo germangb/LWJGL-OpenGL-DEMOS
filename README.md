@@ -11,6 +11,10 @@ A small collection of OpenGL samples implementing different graphics techniques
 - [ ] Light volumes
 - [ ] Skeletal Animation (vertex skinning)
 
+## Contributing
+
+I Accept pull requests for any of the open issues or the unimplemented samples
+
 ## Cube -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Cube.java)
 A collection of single-file xgraphic techniques implemented in OpenGL
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/Cube_screenshot.png)
