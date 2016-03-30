@@ -10,15 +10,15 @@ A small collection of OpenGL samples implementing diferent graphics techniques
 - [ ] Defered decals
 - [ ] Light volumes
 
-## Cube [Ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Cube.java)
+## Cube -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Cube.java)
 A collection of single-file xgraphic techniques implemented in OpenGL
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/Cube_screenshot.png)
 
-## Ping-Pong Blur [Ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Blur.java)
+## Ping-Pong Blur -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Blur.java)
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/Blur_screenshot.png)
 
-## Bloom [Ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
+## Bloom -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/Bloom_screenshot.png)
 
-## SSAO (Ambient occlusion) [Ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
+## SSAO (Ambient occlusion) -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/SSAO_screenshot.png)
