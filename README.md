@@ -25,5 +25,5 @@ A collection of single-file xgraphic techniques implemented in OpenGL
 ## Bloom -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/Bloom_screenshot.png)
 
-## SSAO (Ambient occlusion) -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/Bloom.java)
+## SSAO (Ambient occlusion) -> [ref](https://github.com/germangb/LWJGL-OpenGL-DEMOS/blob/master/src/effects/SSAO.java)
 ![alt text](https://raw.githubusercontent.com/germangb/LWJGL-OpenGL-DEMOS/master/src/effects/SSAO_screenshot.png)
